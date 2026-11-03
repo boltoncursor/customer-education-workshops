@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/page-header";
 import { InvoiceStatusBadge, DisputeStatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { draftCollectionNote } from "@/lib/collection-note";
@@ -12,6 +14,7 @@ import { getInvoice } from "@/lib/data";
 import { daysBetween, formatDate } from "@/lib/dates";
 import { formatUsd } from "@/lib/money";
 import { isPlanId, planLabel } from "@/lib/plans";
+import { prisma } from "@/lib/prisma";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -32,6 +35,16 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
     daysPastDue,
     plan: invoice.plan,
   });
+
+  async function saveCustomerEmail(formData: FormData) {
+    "use server";
+    const email = String(formData.get("email") ?? "");
+    await prisma.customer.update({
+      where: { id: invoice.customer.id },
+      data: { email },
+    });
+    revalidatePath(`/invoices/${invoice.id}`);
+  }
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
@@ -92,8 +105,18 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
               <CardTitle>Customer</CardTitle>
               <CardDescription>{invoice.customer.contactName}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-1 text-sm">
-              <p>{invoice.customer.email}</p>
+            <CardContent className="space-y-3 text-sm">
+              <form action={saveCustomerEmail} className="space-y-2">
+                <Label htmlFor="customer-email">Email</Label>
+                <Input
+                  id="customer-email"
+                  name="email"
+                  type="text"
+                  defaultValue={invoice.customer.email}
+                  key={invoice.customer.email}
+                />
+                <Button type="submit">Save email</Button>
+              </form>
               <p className="text-muted-foreground">Plan on file: {planLabel(invoice.plan)}</p>
             </CardContent>
           </Card>

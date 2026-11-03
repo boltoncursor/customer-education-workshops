@@ -9,7 +9,7 @@ export type SuggestedCreditFetcher = (
   init?: RequestInit,
 ) => Promise<Response>;
 
-export const SUGGESTED_CREDIT_API_VERSION = "v1";
+export const SUGGESTED_CREDIT_API_VERSION = "v2";
 
 export function suggestedCreditPath(disputeId: string): string {
   return `/api/${SUGGESTED_CREDIT_API_VERSION}/disputes/${encodeURIComponent(disputeId)}/suggested-credit`;
