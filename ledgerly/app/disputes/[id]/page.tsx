@@ -76,7 +76,7 @@ export default async function DisputeDetailPage({ params }: { params: Promise<{ 
           1. lib/disputes/resolve.ts
           2. app/api/disputes/[id]/resolve/route.ts
           3. this panel — enable Accept / Decline and persist a reviewer note
-        The suggested-credit client is tracked separately; it still calls v1.
+        The suggested-credit client calls v2, which caps the credit at the catalog price.
       */}
       <Card className="border-dashed">
         <CardHeader>
