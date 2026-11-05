@@ -2,6 +2,8 @@
 
 Public demos for customer education workshops. Each top-level folder is a standalone app — `cd` into it and install there. Demos do not share lockfiles or UI.
 
+Second smoke-test note: delete this line after Bugbot reviews the pull request.
+
 ## Demos
 
 | Folder | What | Run |
