@@ -22,7 +22,7 @@ npm run demo:reset -- --dry-run
 - Deletes a remote with `git push origin --delete` only when the session recorded that branch with `--remote` and the name matches `cursor/*` or `demo/*`.
 - Removes linked worktrees whose branch is a demo branch, then runs `git worktree prune`. Removal unlocks a locked worktree and runs `git worktree remove --force`, so uncommitted changes and untracked files in that directory are discarded. A lock does not keep the directory. Unpushed commits can remain in the primary reflog until it expires. Worktrees on non-demo branches stay.
 - Reseeds SQLite and restarts port 43173.
-- Confirms **1 failed / 32 passed**. It leaves the suggested-credit client on v1 and filter pills writing `state=`.
+- Confirms **1 failed / 36 passed**. It leaves the suggested-credit client on v1 and filter pills writing `state=`.
 
 The script exits with an error before it changes anything when the current branch is not `main` and not a demo branch, when the checkout is detached, when it is run from a linked worktree, or when a branch name is `main` or otherwise unsafe. `--keep-branch` stays on the current branch and skips `git reset --hard` for an isolated check.
 

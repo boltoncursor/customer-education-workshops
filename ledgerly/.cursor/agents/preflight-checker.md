@@ -29,7 +29,7 @@ Run these for `101`, `201`, and `301`. Baseline failures are `blocked` for every
 | Prisma client | Probe only — e.g. `node -e "require.resolve('@prisma/client')"` or an import check. Do **not** run `npx prisma generate`. | `@prisma/client` resolves; remediation may name `npx prisma generate` without running it |
 | SQLite seed | same probe as `start-ledgerly` (`customer.count()` via `tsx`) | prints `seeded` (count > 0) |
 | Dev server | `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:43173` | 2xx/3xx |
-| Shipped suite shape | `npm test` (or vitest summary) | **1 failed / 32 passed**; sole red file `tests/suggested-credit-api.test.ts` |
+| Shipped suite shape | `npm test` (or vitest summary) | **1 failed / 36 passed**; sole red file `tests/suggested-credit-api.test.ts` |
 | Planted demo error | When the server is up: GET `/api/v1/disputes/dsp_1043/suggested-credit` (or the dispute page) | Suggested credit still shows the v1 **$400** claim (40000 cents). Do not "fix" it. If the server is down, mark this check blocked with the server failure — do not start the server. |
 | Empty project MCP map | read `.cursor/mcp.json`; confirm no `mcp/` directory | empty `mcpServers` (e.g. `{}` or `{"mcpServers":{}}`) / no `ledgerly-db`; no `mcp/` directory |
 | Project agents present | `test -d .cursor/agents` | directory exists; track matrices below name which agent files are required |

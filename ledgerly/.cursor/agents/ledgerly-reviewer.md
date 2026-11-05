@@ -14,7 +14,7 @@ When invoked, do not accept claims at face value.
 4. Look for edge cases the change missed.
 5. Apply the Ledgerly checklist.
 
-The clean tree is **1 failed / 32 passed**, and `tests/suggested-credit-api.test.ts` is the planted failure. Treat that failure as expected unless this diff touched the suggested-credit client, its routes, or that test.
+The clean tree is **1 failed / 36 passed**, and `tests/suggested-credit-api.test.ts` is the planted failure. Treat that failure as expected unless this diff touched the suggested-credit client, its routes, or that test.
 
 Ledgerly checklist:
 

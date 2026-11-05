@@ -13,7 +13,7 @@ When invoked, review the diff that was named. If none was named, review the curr
 1. Read the invocation for a plan or task. If it names a plan file, read that file and treat its owned paths as the scope. If it names none, say so and do not invent an out-of-plan finding.
 2. Run `git status`, `git diff`, and `git diff --cached`. On a feature branch, also diff against `main`.
 3. Check each inspection class below. Quote the file and the changed lines. For a credential, name the kind and the file. Do not copy the secret value into the report.
-4. Run `npm test` when the diff touches tests, `lib/`, `app/api/`, or `prisma/`. The clean tree is **1 failed / 32 passed**, and `tests/suggested-credit-api.test.ts` is the planted failure. Record the count you observed.
+4. Run `npm test` when the diff touches tests, `lib/`, `app/api/`, or `prisma/`. The clean tree is **1 failed / 36 passed**, and `tests/suggested-credit-api.test.ts` is the planted failure. Record the count you observed.
 
 ## Inspection classes
 

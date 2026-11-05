@@ -101,6 +101,21 @@ export async function getInvoice(id: string) {
   });
 }
 
+export async function updateInvoiceCustomerEmail(invoiceId: string, email: string) {
+  const invoice = await prisma.invoice.findUnique({
+    where: { id: invoiceId },
+    select: { customerId: true },
+  });
+  if (!invoice) return null;
+
+  await prisma.customer.update({
+    where: { id: invoice.customerId },
+    data: { email },
+  });
+
+  return getInvoice(invoiceId);
+}
+
 export async function getDisputes(filters?: { status?: string }) {
   const disputes = await prisma.dispute.findMany({
     include: disputeInclude,
