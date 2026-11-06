@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CustomerEmailField } from "@/components/customer-email-field";
 import { PageHeader } from "@/components/page-header";
 import { InvoiceStatusBadge, DisputeStatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
@@ -92,8 +93,12 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
               <CardTitle>Customer</CardTitle>
               <CardDescription>{invoice.customer.contactName}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-1 text-sm">
-              <p>{invoice.customer.email}</p>
+            <CardContent className="space-y-3 text-sm">
+              <CustomerEmailField
+                key={invoice.id}
+                invoiceId={invoice.id}
+                email={invoice.customer.email}
+              />
               <p className="text-muted-foreground">Plan on file: {planLabel(invoice.plan)}</p>
             </CardContent>
           </Card>
