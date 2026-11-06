@@ -18,15 +18,17 @@ model Workspace {
 }
 
 model Customer {
-  id          String    @id
-  workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
-  name        String
-  contactName String
-  email       String
-  plan        String
-  createdAt   DateTime  @default(now())
-  invoices    Invoice[]
+  id              String            @id
+  workspaceId     String
+  workspace       Workspace         @relation(fields: [workspaceId], references: [id])
+  name            String
+  contactName     String
+  email           String
+  plan            String
+  createdAt       DateTime          @default(now())
+  invoices        Invoice[]
+  paymentPromises PaymentPromise[]
+  activities      AccountActivity[]
 }
 
 model Invoice {
@@ -48,6 +50,8 @@ model Invoice {
   collectionNote  String?
   lines           InvoiceLine[]
   disputes        Dispute[]
+  paymentPromises PaymentPromise[]
+  activities      AccountActivity[]
 }
 
 model InvoiceLine {
@@ -72,4 +76,38 @@ model Dispute {
   disputedAmountCents  Int
   suggestedCreditCents Int
   reviewerNote         String?
+}
+
+/// A promise to pay. Not a payment: saving one must not change the invoice status or total.
+model PaymentPromise {
+  id           String            @id
+  invoiceId    String
+  invoice      Invoice           @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  customerId   String
+  customer     Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  promisedOn   DateTime
+  takenBy      String
+  note         String
+  amountCents  Int
+  status       String
+  createdAt    DateTime          @default(now())
+  replacedAt   DateTime?
+  activities   AccountActivity[]
+}
+
+/// Account timeline row. Replacing a promise keeps the earlier row.
+model AccountActivity {
+  id          String         @id
+  customerId  String
+  customer    Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  invoiceId   String
+  invoice     Invoice        @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  promiseId   String
+  promise     PaymentPromise @relation(fields: [promiseId], references: [id], onDelete: Cascade)
+  type        String
+  actorName   String
+  note        String
+  promisedOn  DateTime
+  amountCents Int
+  createdAt   DateTime       @default(now())
 }

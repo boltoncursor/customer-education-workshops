@@ -95,6 +95,14 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
             <CardContent className="space-y-1 text-sm">
               <p>{invoice.customer.email}</p>
               <p className="text-muted-foreground">Plan on file: {planLabel(invoice.plan)}</p>
+              <p>
+                <Link
+                  href={`/customers/${invoice.customer.id}`}
+                  className="font-medium text-indigo hover:underline"
+                >
+                  Open account
+                </Link>
+              </p>
             </CardContent>
           </Card>
 

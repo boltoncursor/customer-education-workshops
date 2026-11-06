@@ -337,6 +337,8 @@ async function main() {
     stdio: "inherit",
   });
 
+  await prisma.accountActivity.deleteMany();
+  await prisma.paymentPromise.deleteMany();
   await prisma.dispute.deleteMany();
   await prisma.invoiceLine.deleteMany();
   await prisma.invoice.deleteMany();

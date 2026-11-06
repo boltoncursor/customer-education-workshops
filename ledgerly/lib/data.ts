@@ -101,6 +101,15 @@ export async function getInvoice(id: string) {
   });
 }
 
+export async function getCustomer(id: string) {
+  return prisma.customer.findUnique({
+    where: { id },
+    include: {
+      invoices: { orderBy: { dueOn: "asc" } },
+    },
+  });
+}
+
 export async function getDisputes(filters?: { status?: string }) {
   const disputes = await prisma.dispute.findMany({
     include: disputeInclude,
